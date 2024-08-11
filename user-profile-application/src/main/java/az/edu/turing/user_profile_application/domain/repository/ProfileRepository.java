@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
 
-    Page<ProfileEntity> getAllProfiles(Pageable pageable);
+    Page<ProfileEntity> findAll(Pageable pageable);
 }
