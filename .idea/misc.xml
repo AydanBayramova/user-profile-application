@@ -5,7 +5,7 @@
     <file type="web" url="file://$PROJECT_DIR$/bff" />
     <file type="web" url="file://$PROJECT_DIR$/user-profile-application" />
   </component>
-  <component name="ProjectRootManager">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" project-jdk-name="21" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

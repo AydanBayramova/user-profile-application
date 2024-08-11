@@ -10,9 +10,6 @@
         <module name="bff.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="user-profile-application.user-profile-application.main~1" target="21" />
-      <module name="user-profile-application.user-profile-application.test~1" target="21" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="21" />
   </component>
 </project>
