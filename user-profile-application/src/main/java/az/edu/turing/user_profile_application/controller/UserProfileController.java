@@ -78,6 +78,19 @@ public class UserProfileController {
         log.info("get profile by id");
         return profileService.getProfileById(userId, profileId);
     }
+    @DeleteMapping("{userId}/profiles/{profileId}")
+    public void deleteProfileById(@PathVariable Long userId, @PathVariable Long profileId) {
+        log.info("delete profile by id");
+        profileService.deleteProfileById(userId, profileId);
+    }
+
+    @PutMapping("{userId}/profiles/{profileId}")
+    public ProfileDto updateProfileById(@PathVariable Long userId, @PathVariable Long profileId, @RequestBody ProfileDto profile) {
+        log.info("update profile by id");
+        return profileService.updateProfile(userId,profileId,profile);
+    }
+
+
 
 
 
