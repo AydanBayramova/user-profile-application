@@ -6,22 +6,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 
-@Service
+
+
 public interface ProfileService {
 
     ProfileDto addProfile(Long userId,ProfileDto profileDto);
 
     ProfileDto updateProfile(Long id, ProfileDto profileDto);
 
-    ProfileDto getProfileById(Long id);
+    ProfileDto getProfileById(Long userId,Long profileId);
 
-    void deleteProfileById(Long id);
+    void deleteProfileById(Long userId, Long profileId);
 
-    Page<ProfileDto> getAllProfiles(Pageable pageable);
+    Page<ProfileDto> getAllProfiles(Long id,Pageable pageable);
 
-    void deleteAllProfiles();
+//    void deleteAllProfiles();
 
 }
