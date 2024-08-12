@@ -22,11 +22,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
+    @Transactional
     @Override
     public UserDto save(UserDto userDto) {
         return userMapper.toUserDto(userRepository.save(userMapper.toUserEntity(userDto)));
     }
 
+    @Transactional
     @Override
     public Page<UserDto> getAll(Pageable pageable) {
         Page<UserEntity> userEntities = userRepository.findAll(pageable);
@@ -40,8 +42,8 @@ public class UserServiceImpl implements UserService {
         return userEntity.map(userMapper::toUserDto);
     }
 
-    @Override
     @Transactional
+    @Override
     public void deleteAll() {
         List<UserEntity> users = userRepository.findAll();
         users.forEach(user -> {
@@ -52,8 +54,8 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteAll();
     }
 
-    @Override
     @Transactional
+    @Override
     public void deleteById(Long id) {
         UserEntity userEntity = userRepository.findByIdWithProfiles(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
@@ -64,6 +66,7 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public UserDto update(Long id, UserDto userDto) {
         Optional<UserEntity> existingUser = userRepository.findById(id);
