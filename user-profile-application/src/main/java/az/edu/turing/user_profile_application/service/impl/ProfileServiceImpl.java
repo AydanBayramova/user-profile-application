@@ -10,10 +10,12 @@ import az.edu.turing.user_profile_application.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Optional;
-
+@Service
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService {
 
@@ -21,7 +23,7 @@ public class ProfileServiceImpl implements ProfileService {
     private final ProfileMapper profileMapper;
     private final UserRepository userRepository;
 
-
+    @Transactional
     @Override
     public ProfileDto addProfile(Long userId, ProfileDto profileDto) {
         UserEntity user = userRepository.findById(userId).
@@ -35,6 +37,7 @@ public class ProfileServiceImpl implements ProfileService {
         return profileMapper.toprofileDto(profileEntity);
     }
 
+    @Transactional
     @Override
     public ProfileDto updateProfile(Long id, ProfileDto profileDto) {
         Optional<ProfileEntity> byId = profileRepository.findById(id);
@@ -47,26 +50,27 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public ProfileDto getProfileById(Long id) {
-        return profileMapper.toprofileDto(profileRepository.findById(id)
+    public ProfileDto getProfileById(Long userId,Long profileId) {
+        return profileMapper.toprofileDto(profileRepository.findByUserIdAndId(userId,profileId)
                 .orElseThrow(() -> new RuntimeException("Profile not found")));
     }
 
+    @Transactional
     @Override
-    public void deleteProfileById(Long id) {
-        ProfileEntity profile = profileRepository.findById(id)
+    public void deleteProfileById(Long userId , Long profileId) {
+        ProfileEntity profile = profileRepository.findByUserIdAndId(userId,profileId)
                 .orElseThrow(() -> new RuntimeException("Profile not found"));
         profileRepository.delete(profile);
     }
 
+    @Transactional
     @Override
-    public Page<ProfileDto> getAllProfiles(Pageable pageable) {
-        return profileRepository.findAll(pageable).map(profileMapper::toprofileDto);
+    public Page<ProfileDto> getAllProfiles(Long userId, Pageable pageable) {
+        return profileRepository.findAllByUserId(userId, pageable).map(profileMapper::toprofileDto);
     }
-
-
-    @Override
-    public void deleteAllProfiles() {
-        profileRepository.deleteAll();
-    }
+//    @Transactional
+//    @Override
+//    public void deleteAllProfiles() {
+//        profileRepository.deleteAll();
+//    }
 }
