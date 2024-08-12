@@ -39,15 +39,18 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Transactional
     @Override
-    public ProfileDto updateProfile(Long id, ProfileDto profileDto) {
-        Optional<ProfileEntity> byId = profileRepository.findById(id);
-        if (byId.isPresent()) {
-            return profileMapper.toprofileDto(profileRepository.save(profileMapper.toprofileEntity(profileDto)));
+    public ProfileDto updateProfile(Long userId, Long profileId, ProfileDto profileDto) {
+        Optional<ProfileEntity> existingProfileOpt = profileRepository.findByUserIdAndId(userId, profileId);
+        if (existingProfileOpt.isPresent()) {
+            ProfileEntity existingProfile = existingProfileOpt.get();
+            profileMapper.updateProfileEntityFromDto(profileDto, existingProfile);
+            ProfileEntity updatedProfile = profileRepository.save(existingProfile);
+            return profileMapper.toprofileDto(updatedProfile);
         } else {
-            throw new RuntimeException("profile not found");
+            throw new RuntimeException("Profile not found");
         }
-
     }
+
 
     @Override
     public ProfileDto getProfileById(Long userId,Long profileId) {

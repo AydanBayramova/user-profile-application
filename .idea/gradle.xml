@@ -9,6 +9,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/bff" />
+            <option value="$PROJECT_DIR$/bff/bff" />
+            <option value="$PROJECT_DIR$/bff/user-profile-application" />
           </set>
         </option>
       </GradleProjectSettings>
