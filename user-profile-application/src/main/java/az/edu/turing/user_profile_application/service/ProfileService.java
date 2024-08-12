@@ -13,7 +13,7 @@ public interface ProfileService {
 
     ProfileDto addProfile(Long userId,ProfileDto profileDto);
 
-    ProfileDto updateProfile(Long id, ProfileDto profileDto);
+    ProfileDto updateProfile(Long userId,Long profileId, ProfileDto profileDto);
 
     ProfileDto getProfileById(Long userId,Long profileId);
 
