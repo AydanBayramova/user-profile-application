@@ -1,8 +1,9 @@
 package az.edu.turing.user_profile_application.controller;
 
 
-
+import az.edu.turing.user_profile_application.model.dto.ProfileDto;
 import az.edu.turing.user_profile_application.model.dto.UserDto;
+import az.edu.turing.user_profile_application.service.ProfileService;
 import az.edu.turing.user_profile_application.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,9 +18,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 
-public class UserController {
+public class UserProfileController {
 
     private final UserService userService;
+    private final ProfileService profileService;
 
 
     @PostMapping
@@ -60,6 +61,23 @@ public class UserController {
         return userService.update(id, user);
     }
 
+    @PostMapping("/{userId}/profiles")
+    public ProfileDto addProfile(@PathVariable Long userId, @RequestBody ProfileDto profile) {
+        log.info("add profile");
+        return profileService.addProfile(userId, profile);
+    }
+
+    @GetMapping("{userId}/profiles")
+    public Page<ProfileDto> getProfiles(@PathVariable Long userId, Pageable pageable) {
+        log.info("get profiles");
+        return profileService.getAllProfiles(userId, pageable);
+    }
+
+    @GetMapping("{userId}/profiles/{profileId}")
+    public ProfileDto getProfileById(@PathVariable Long userId, @PathVariable Long profileId) {
+        log.info("get profile by id");
+        return profileService.getProfileById(userId, profileId);
+    }
 
 
 
